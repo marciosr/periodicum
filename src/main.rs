@@ -5,6 +5,8 @@ extern crate gdk;
 
 mod tabela;
 
+use crate::tabela::*;
+
 use std::fs::File;
 use std::io::prelude::*;
 use std::fs;
@@ -191,14 +193,12 @@ fn on_activate(application: &gtk::Application) {
 
 	let estrutura = match carrega_dados() {
 		Ok(serializado) => desserializa(serializado),
-		Err(_e) => panic!("Arquivo de dados não encontrado!"),
+		Err(_e) => desserializa(make_tabela().to_string()),
 	};
+
 	// becape da estrutura
 
 	salva_dados(serializa_yaml(&estrutura), "dados.yaml");
-
-	// salva_dados(estrutura, "estruct.txt");
-
 
 	println!("Estrutura: {:?}", &estrutura);
 
@@ -207,8 +207,6 @@ fn on_activate(application: &gtk::Application) {
 }
 
 fn main() {
-
-
 
 	let app = gtk::Application::new(Some("com.github.marciosr.periodicum"), Default::default())
 		.expect("Initialization failed...");

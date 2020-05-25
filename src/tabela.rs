@@ -1,7 +1,6 @@
-fn tabela () -> &'static str {
+pub fn make_tabela () -> &'static str {
 	let s =
-	r#"
-	---
+	r#"---
 - name: Hydrogen
   symbol: H
   atomic_number: 1
@@ -6845,7 +6844,6 @@ fn tabela () -> &'static str {
   discovered_by: Dubna/Livermore
   named_after: Un (one) un (one) octium (eight)
   pos_x: 17
-  pos_y: 6
-	"#;
+  pos_y: 6"#;
 	s
 }
