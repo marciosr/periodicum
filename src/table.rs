@@ -1,4 +1,4 @@
-pub fn make_tabela () -> &'static str {
+pub fn make_table () -> &'static str {
 	let s =
 	r#"---
 - name: Hydrogen
