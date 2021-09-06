@@ -1,7 +1,4 @@
-extern crate gio;
 extern crate gtk;
-extern crate pango;
-extern crate gdk;
 
 #[macro_use]
 mod utils;
@@ -10,9 +7,8 @@ mod backend;
 
 use crate::gui::*;
 use crate::backend::*;
-use gio::prelude::*;
 use gtk::prelude::*;
-use gtk::{Builder, Grid, ApplicationWindow};
+use gtk::{gdk, Builder, Grid, ApplicationWindow};
 use rust_embed::RustEmbed;
 
 #[derive(RustEmbed)]

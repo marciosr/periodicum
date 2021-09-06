@@ -1,8 +1,8 @@
 use crate::backend::*;
-use glib::clone;
 use gtk::prelude::*;
 use std::rc::Rc;
-use gtk::{Builder, Button, Label, Window, HeaderBar};
+use gtk::{glib, Builder, Button, Label, Window, HeaderBar};
+use glib::clone;
 use rust_embed::RustEmbed;
 
 #[derive(RustEmbed)]
