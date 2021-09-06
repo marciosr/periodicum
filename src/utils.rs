@@ -28,7 +28,6 @@ macro_rules! build_widget {
 		$name.set_child(Some(&boxe));
 
 		match emto.atomic_number {
-			// 1 | 6 | 7 | 8 | 15 | 16 | 34 => gtk::prelude::WidgetExtManual::set_name(&$name,"nm"),
 			1 | 6 | 7 | 8 | 15 | 16 | 34 => $name.set_widget_name("nm"),
 			3 | 11 | 19 | 37 | 55 | 87 => $name.set_widget_name("ma"),
 			4 | 12 | 20 | 38 | 56 | 88 => $name.set_widget_name("mat"),
