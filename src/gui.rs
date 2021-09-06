@@ -163,7 +163,7 @@ impl ElementDialog {
 	pub fn new() -> Rc<Self> {
 
 		let glade_src = include_str!("dialogo.ui");
-		let builder = Builder::new_from_string(glade_src);
+		let builder = Builder::from_string(glade_src);
 
 		get_widget!(builder, Window, dialog);
 		get_widget!(builder, HeaderBar, headerbar);
@@ -198,12 +198,12 @@ impl ElementDialog {
 
 		let dialog_clone = dialog.clone();
 		dialog.connect_delete_event(move |_,_|{
-			dialog_clone.destroy();
+			dialog_clone.close();
 			Inhibit(false)
 		});
 
 		bt_close.connect_clicked(clone!(@strong dialog => move |_| {
-			dialog.destroy();
+			dialog.close();
 		}));
 
 		let element_dialog = Rc::new(Self {	dialog, headerbar, name, symbol, atomic_number, atomic_weigth, density,

@@ -19,7 +19,7 @@ use gtk::{Builder, Grid, ApplicationWindow};
 fn on_activate(application: &gtk::Application) {
 
 	let glade_src = include_str!("window.ui");
-	let builder = Builder::new_from_string(glade_src);
+	let builder = Builder::from_string(glade_src);
 
 	get_widget!(builder, ApplicationWindow, window);
 	get_widget!(builder, Grid, grid);
@@ -37,8 +37,7 @@ fn on_activate(application: &gtk::Application) {
 
 fn main() {
 
-	let app = gtk::Application::new(Some("com.github.marciosr.periodicum"), Default::default())
-		.expect("Initialization failed...");
+	let app = gtk::Application::new(Some("com.github.marciosr.periodicum"), Default::default());
 
 	app.connect_activate(|app| {
 
@@ -49,7 +48,7 @@ fn main() {
 			.expect("Failed to load CSS.");
 
 		gtk::StyleContext::add_provider_for_screen(
-			&gdk::Screen::get_default().expect("Error initializing gtk css provider."),
+			&gdk::Screen::default().expect("Error initializing gtk css provider."),
 			&provider,
 			gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
 		);
@@ -57,5 +56,5 @@ fn main() {
 		on_activate(app);
 	});
 
-	app.run(&std::env::args().collect::<Vec<_>>());
+	app.run();
 }
