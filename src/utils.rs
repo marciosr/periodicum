@@ -1,6 +1,7 @@
 macro_rules! get_widget {
 	($builder:expr, $wtype:ty, $name:ident) => {
-		let $name: $wtype = $builder.get_object(stringify!($name)).expect(&format!("Could not find widget \"{}\"", stringify!($name)));
+		let $name: $wtype = $builder.object(stringify!($name))
+			.expect(&format!("Could not find widget \"{}\"", stringify!($name)));
 	};
 }
 
@@ -20,13 +21,14 @@ macro_rules! build_widget {
 		lb_aw.set_widget_name("atomic_weight");
 		let boxe: gtk::Box = gtk::Box::new(gtk::Orientation::Vertical, 1);
 
-		boxe.pack_start(&lb_an, true, true, 1);
-		boxe.pack_start(&lb_sy, true, true, 1);
-		boxe.pack_start(&lb_aw, true, true, 1);
+		boxe.append(&lb_an);
+		boxe.append(&lb_sy);
+		boxe.append(&lb_aw);
 
-		$name.add(&boxe);
+		$name.set_child(Some(&boxe));
 
 		match emto.atomic_number {
+			// 1 | 6 | 7 | 8 | 15 | 16 | 34 => gtk::prelude::WidgetExtManual::set_name(&$name,"nm"),
 			1 | 6 | 7 | 8 | 15 | 16 | 34 => $name.set_widget_name("nm"),
 			3 | 11 | 19 | 37 | 55 | 87 => $name.set_widget_name("ma"),
 			4 | 12 | 20 | 38 | 56 | 88 => $name.set_widget_name("mat"),
@@ -51,5 +53,20 @@ macro_rules! build_widget {
 macro_rules! wid {
 	($nome_button:expr) => {
 		$nome_button
+	};
+}
+// O uso da macro é:
+// string_from_resource( variaval,
+// 											 estrutura dos recursos,
+// 											 "nome do arquivo")
+macro_rules! string_from_resource {
+	($string_var_name:ident, $resource:ident, $file_name:expr) => {
+
+	let $string_var_name: String = String::from(
+		std::str::from_utf8(
+		$resource::get($file_name)
+		.unwrap()
+		.as_ref())
+		.unwrap());
 	};
 }

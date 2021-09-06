@@ -36,7 +36,6 @@ pub struct ElementData {
 	pub pos_y:											i32,
 }
 
-
 #[allow(dead_code)]
 pub fn serializa_yaml (vec: &Vec::<ElementData>) -> String {
 	let serializado = serde_yaml::to_string(&vec).unwrap();
@@ -47,17 +46,24 @@ pub fn desserializa (serializado: String) -> Vec::<ElementData> {
 	let desserializado: Vec::<ElementData> = serde_yaml::from_str(&serializado).unwrap();
 	desserializado
 }
-
+#[allow(dead_code)]
 pub fn carrega_dados () -> std::io::Result<String> {
 	let file = fs::read_to_string("dados.yaml")?;
 	Ok(file)
 }
+#[allow(dead_code)]
+pub fn load_data (name: &str) -> std::io::Result<String> {
+	let file = fs::read_to_string(name)?;
+	Ok(file)
+}
 
 #[allow(dead_code)]
-pub fn salva_dados (serializado: String, file_name: &str) -> std::io::Result<()> {
+pub fn salva_dados (serializado: String,
+										file_name: &str) -> std::io::Result<()> {
 	let mut file = File::create(file_name)?;
 	file.write_all(&serializado.as_bytes())?;
 	println!("Perfis salvos no disco.");
 
 	Ok(())
 }
+
