@@ -7,15 +7,12 @@ extern crate gdk;
 mod utils;
 mod gui;
 mod backend;
-mod table;
 
-use crate::table::*;
 use crate::gui::*;
 use crate::backend::*;
 use gio::prelude::*;
 use gtk::prelude::*;
 use gtk::{Builder, Grid, ApplicationWindow};
-
 use rust_embed::RustEmbed;
 
 #[derive(RustEmbed)]
@@ -28,19 +25,13 @@ struct Ui;
 
 fn on_activate(application: &gtk::Application) {
 
-	//let glade_src = include_str!("window.ui");
-	string_from_resource!(glade_src, Ui, "window.ui");
-	let builder = Builder::from_string(&glade_src);
+	string_from_resource!(ui_src, Ui, "window.ui");
+	let builder = Builder::from_string(&ui_src);
 
 	get_widget!(builder, ApplicationWindow, window);
 	get_widget!(builder, Grid, grid);
 
 	application.add_window(&window);
-
-	// let estrutura = match carrega_dados() {
-	// 	Ok(serializado) => desserializa(serializado),
-	// 	Err(_e) => desserializa(make_table().to_string()),
-	// };
 
 	string_from_resource!(dados, Asset, "dados.yaml");
 	let estrutura = desserializa(dados);

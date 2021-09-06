@@ -48,6 +48,7 @@ pub fn desserializa (serializado: String) -> Vec::<ElementData> {
 	desserializado
 }
 
+#[allow(dead_code)]
 pub fn carrega_dados () -> std::io::Result<String> {
 	let file = fs::read_to_string("dados.yaml")?;
 	Ok(file)
