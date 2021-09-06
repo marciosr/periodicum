@@ -16,10 +16,21 @@ use gio::prelude::*;
 use gtk::prelude::*;
 use gtk::{Builder, Grid, ApplicationWindow};
 
+use rust_embed::RustEmbed;
+
+#[derive(RustEmbed)]
+#[folder = "data/resources"]
+struct Asset;
+
+#[derive(RustEmbed)]
+#[folder = "data/ui"]
+struct Ui;
+
 fn on_activate(application: &gtk::Application) {
 
-	let glade_src = include_str!("window.ui");
-	let builder = Builder::from_string(glade_src);
+	//let glade_src = include_str!("window.ui");
+	string_from_resource!(glade_src, Ui, "window.ui");
+	let builder = Builder::from_string(&glade_src);
 
 	get_widget!(builder, ApplicationWindow, window);
 	get_widget!(builder, Grid, grid);
@@ -41,10 +52,12 @@ fn main() {
 
 	app.connect_activate(|app| {
 
+		string_from_resource!(css, Asset, "style.css");
+
 		let provider = gtk::CssProvider::new();
 
 		provider
-			.load_from_data(STYLE.as_bytes())
+			.load_from_data(css.as_bytes())
 			.expect("Failed to load CSS.");
 
 		gtk::StyleContext::add_provider_for_screen(

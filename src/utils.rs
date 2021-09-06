@@ -53,3 +53,18 @@ macro_rules! wid {
 		$nome_button
 	};
 }
+
+// O uso da macro é:
+// string_from_resource( variaval,
+// 											 estrutura dos recursos,
+// 											 "nome do arquivo")
+macro_rules! string_from_resource {
+	($string_var_name:ident, $resource:ident, $file_name:expr) => {
+
+		let content = $resource::get($file_name).unwrap();
+
+		let content_data = content.data.as_ref();
+
+		let $string_var_name: String = String::from(std::str::from_utf8(content_data).unwrap());
+	};
+}

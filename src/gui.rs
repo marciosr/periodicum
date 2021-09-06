@@ -3,6 +3,13 @@ use glib::clone;
 use gtk::prelude::*;
 use std::rc::Rc;
 use gtk::{Builder, Button, Label, Window, HeaderBar};
+use rust_embed::RustEmbed;
+
+#[derive(RustEmbed)]
+#[folder = "data/ui"]
+struct Ui;
+
+
 
 pub const STYLE: &str = "
 /* Aplicável a todos os botões */
@@ -162,8 +169,9 @@ pub struct ElementDialog {
 impl ElementDialog {
 	pub fn new() -> Rc<Self> {
 
-		let glade_src = include_str!("dialogo.ui");
-		let builder = Builder::from_string(glade_src);
+		//let glade_src = include_str!("dialogo.ui");
+		string_from_resource!(glade_src, Ui, "dialog.ui");
+		let builder = Builder::from_string(&glade_src);
 
 		get_widget!(builder, Window, dialog);
 		get_widget!(builder, HeaderBar, headerbar);
