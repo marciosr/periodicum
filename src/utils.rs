@@ -62,11 +62,10 @@ macro_rules! wid {
 macro_rules! string_from_resource {
 	($string_var_name:ident, $resource:ident, $file_name:expr) => {
 
-	let $string_var_name: String = String::from(
-		std::str::from_utf8(
-		$resource::get($file_name)
-		.unwrap()
-		.as_ref())
-		.unwrap());
+		let content = $resource::get($file_name).unwrap();
+
+		let content_data = content.data.as_ref();
+
+		let $string_var_name: String = String::from(std::str::from_utf8(content_data).unwrap());
 	};
 }
