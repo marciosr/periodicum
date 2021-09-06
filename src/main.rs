@@ -37,10 +37,13 @@ fn on_activate(application: &gtk::Application) {
 
 	application.add_window(&window);
 
-	let estrutura = match carrega_dados() {
-		Ok(serializado) => desserializa(serializado),
-		Err(_e) => desserializa(make_table().to_string()),
-	};
+	// let estrutura = match carrega_dados() {
+	// 	Ok(serializado) => desserializa(serializado),
+	// 	Err(_e) => desserializa(make_table().to_string()),
+	// };
+
+	string_from_resource!(dados, Asset, "dados.yaml");
+	let estrutura = desserializa(dados);
 
 	build_ui(&grid, estrutura, &window);
 	window.show_all();
